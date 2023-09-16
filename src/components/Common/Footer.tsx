@@ -9,13 +9,17 @@ const FooterWrapper = styled.div`
   font-size: 15px;
   text-align: center;
   line-height: 1.5;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
 `
 
 const Footer: FunctionComponent = function () {
   return (
     <FooterWrapper>
       Thank You for Visiting My Blog, Have a Good Day 😆
-      <br />© 2021 Developer Jung, Powered By Gatsby.
+      <br />© 2023 Developer Jung, Powered By Gatsby.
     </FooterWrapper>
   )
 }
