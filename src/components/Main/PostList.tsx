@@ -1,16 +1,12 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useMemo } from 'react'
 import styled from '@emotion/styled'
 import PostItem from './PostItem'
+import { PostListItemType } from 'types/PostItem.types'
+import useInfiniteScroll from 'hooks/useInfiniteScroll'
 
-const POST_ITEM_DATA = {
-  title: 'Post Item Title',
-  date: '2020.01.29.',
-  categories: ['Web', 'Frontend', 'Testing'],
-  summary:
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident repellat doloremque fugit quis rem temporibus! Maxime molestias, suntrem debitis odit harum impedit. Modi cupiditate harum dignissimos eos in corrupti!',
-  thumbnail:
-    'https://velog.velcdn.com/images/yeonseong_lee/post/68b38479-e82b-482c-9a1c-f1b4f3ef3d32/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.png',
-  link: '<https://www.google.co.kr/>',
+type PostListProps = {
+  selectedCategory: string
+  posts: PostListItemType[]
 }
 
 const PostListWrapper = styled.div`
@@ -28,13 +24,17 @@ const PostListWrapper = styled.div`
   }
 `
 
-const PostList: FunctionComponent = function () {
+const PostList: FunctionComponent<PostListProps> = function ({
+  selectedCategory,
+  posts,
+}) {
+  const { containerRef, postList } = useInfiniteScroll(selectedCategory, posts)
+
   return (
-    <PostListWrapper>
-      <PostItem {...POST_ITEM_DATA} />
-      <PostItem {...POST_ITEM_DATA} />
-      <PostItem {...POST_ITEM_DATA} />
-      <PostItem {...POST_ITEM_DATA} />
+    <PostListWrapper ref={containerRef}>
+      {postList.map(({ node: { id, frontmatter } }: PostListItemType) => (
+        <PostItem {...frontmatter} link="https://www.google.co.kr/" key={id} />
+      ))}
     </PostListWrapper>
   )
 }
