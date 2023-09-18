@@ -1,2 +1,0 @@
-- typescript
-- gatsby-plugin-typescript: gatsby에서 타입 스크립트를 사용
